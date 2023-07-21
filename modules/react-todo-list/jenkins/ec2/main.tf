@@ -7,5 +7,7 @@ resource "aws_instance" "jenkins-ec2" {
     Name = "jenkins-ec2"
   }
 
+  key_name = "A4L"
+  
   user_data = file("${path.module}/user_data.sh")
 }

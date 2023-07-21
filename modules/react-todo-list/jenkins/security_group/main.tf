@@ -8,7 +8,7 @@ resource "aws_security_group" "jenkins-sg" {
       from_port   = ingress.value
       to_port     = ingress.value
     #   replace with secure ip
-      cidr_blocks = ["0.0.0.0/0"]
+      cidr_blocks = ["${var.myIp}/32"]
     }
   }
 
