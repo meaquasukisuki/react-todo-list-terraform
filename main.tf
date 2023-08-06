@@ -15,7 +15,3 @@ provider "aws" {
 }
 
 
-module "aws_s3_practice" {
-  source = "./modules/aws_examples/s3_practice"
-}
-
