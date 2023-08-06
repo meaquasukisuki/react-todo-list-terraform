@@ -6,7 +6,6 @@ variable "ingressports" {
 variable "myIp" {
     type = string
     description = "my local ip in tokyo"
-    # default = "126.51.139.72"
     # default = "localIp.txt"
 }
 
