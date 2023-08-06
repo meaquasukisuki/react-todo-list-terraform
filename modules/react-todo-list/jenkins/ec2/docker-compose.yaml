@@ -1,13 +1,49 @@
 version: '3.7'
 services:
-  jenkins:
-    image: jenkins/jenkins:lts
+  jenkins-docker:
+    image: docker:dind
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    networks:
+      jenkins: 
+        aliases: 
+          - docker
     privileged: true
-    user: root
+    ports:
+      - 3000:3000
+      - 5000:5000
+      - 2376:2376
+    container_name: jenkins-docker
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    command: --storage-driver=overlay2
+
+  jenkins-blueocean:
+    image: myjenkins-blueocean:2.401.3-1
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+      - JAVA_OPTS="-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true"
+    networks:
+      - jenkins
     ports:
       - 8080:8080
       - 50000:50000
-    container_name: jenkins-lts
     volumes:
-      - /jenkins_home:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+      - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+      # - ${HOME}:/home
+    restart: on-failure
+
+networks:
+  jenkins: 
+    external: true
+    name: jenkins
+    attachable: true
+
+volumes:
+  jenkins-docker-certs:
+  jenkins-data: 

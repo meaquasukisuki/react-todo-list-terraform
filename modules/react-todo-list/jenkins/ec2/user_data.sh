@@ -15,7 +15,11 @@ sudo docker --version >> /var/log/user_data_error.log
 echo -e 'docker compose version: ' >> /var/log/user_data_error.log
 sudo docker compose version >> /var/log/user_data_error.log
 
+sudo docker network create jenkins
+
 # jenkins
-mkdir jenkins jenkins_home
+# mkdir jenkins jenkins_home
+mkdir -p /var/jenkins_home
+mkdir -p /var/certs/client
 
 echo -e " \n end script "  >> /var/log/user_data_error.log 

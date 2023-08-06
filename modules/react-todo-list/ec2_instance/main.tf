@@ -7,5 +7,7 @@ resource "aws_instance" "react-todo-list" {
     Name = "react-todo-list-web"
   }
 
+  key_name = "A4L"
+
   user_data = file("${path.module}/user_data.sh")
 }
