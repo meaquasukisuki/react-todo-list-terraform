@@ -14,4 +14,10 @@ provider "aws" {
   region = var.aws_region # Replace with your desired AWS region
 }
 
+# module "s3_practice" {
+#   source = "./modules/aws_examples/s3_practice"
+# }
 
+module "vpc_practice" {
+  source = "./modules/aws_examples/s3_practice/vpc"
+}
